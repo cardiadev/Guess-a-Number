@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 
 // Random Number between 1 to 30
@@ -10,37 +10,48 @@ function App() {
   //React Hook useState
   const [value, setValue] = useState("");
   const [results, setResults] = useState("");
-  const [chances, setChances] = useState("");
+  const [chances, setChances] = useState(0);
 
+  useEffect(()=>{
+    if (chances === 3){
+      setResults(<p className="alert alert-lose">{`You lose 😢, try it again 😉`}</p>);
+      return 
+    }else{
 
-/*   const sumChance = () =>{
-    chances + 1;
-  } */
+    }
+
+  },[chances])
 
   const onClick = () => {
-    // String to integer
-    const userInput = parseInt(value, setValue); 
 
-    // If clicks 'Start' without entering a number WARNING
-    setResults(<p className="alert alert-danger">🚫 Only numbers are allowed 🚫</p>);
+    if (chances < 3){
 
-    // If input matches ranNum, WIN
-    if (userInput === ranNum){
-      setResults(<p className="alert alert-success">Congratulations you WIN 🏆</p>);
+      // String to integer
+      const userInput = parseInt(value, setValue); 
+  
+      // If clicks 'Start' without entering a number WARNING
+      setResults(<p className="alert alert-danger">🚫 Only numbers are allowed 🚫</p>);
+      
+      // If input matches ranNum, WIN
+      if (userInput === ranNum){
+        setResults(<p className="alert alert-success">Congratulations you WIN 🏆</p>);
+      }
+      
+      // If input is higher than ranNum, TO HIGH
+      if (userInput > ranNum){
+        setResults(<p className="alert alert-warning">{`No, you must write a number less than ${userInput}`}</p>);
+        setChances(chances+1)
+      }
+      
+      // If input is lower than ranNum, TO LOW
+      if (userInput < ranNum){
+        setResults(<p className="alert alert-warning">{`No, you must write a number greater than ${userInput}`}</p>);
+        setChances(chances+1)
+        
+      }
     }
+
     
-    // If input is higher than ranNum, TO HIGH
-    if (userInput > ranNum){
-      setResults(<p className="alert alert-warning">{`No, you must write a number less than ${userInput}`}</p>);
-      // sumChance();
-    }
-
-    // If input is lower than ranNum, TO LOW
-    if (userInput < ranNum){
-      setResults(<p className="alert alert-warning">{`No, you must write a number greater than ${userInput}`}</p>);
-
-    }
-
 
     };
 

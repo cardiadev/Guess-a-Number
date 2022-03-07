@@ -15,7 +15,12 @@
 .alert-danger{
     color: red;
 }
+.alert-danger{
+    font-size: 35px;
+    color: red;
+}
 
 .alert-warning{
   color: rgb(255, 183, 0);
 }
+
