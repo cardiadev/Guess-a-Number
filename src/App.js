@@ -1,25 +1,72 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from "react";
+
+
+// Random Number between 1 to 30
+let ranNum = Math.round(Math.random() * 30);
+console.log(ranNum)
 
 function App() {
+  //React Hook useState
+  const [value, setValue] = useState("");
+  const [results, setResults] = useState("");
+  const [chances, setChances] = useState("");
+
+
+/*   const sumChance = () =>{
+    chances + 1;
+  } */
+
+  const onClick = () => {
+    // String to integer
+    const userInput = parseInt(value, setValue); 
+
+    // If clicks 'Start' without entering a number WARNING
+    setResults(<p className="alert alert-danger">🚫 Only numbers are allowed 🚫</p>);
+
+    // If input matches ranNum, WIN
+    if (userInput === ranNum){
+      setResults(<p className="alert alert-success">Congratulations you WIN 🏆</p>);
+    }
+    
+    // If input is higher than ranNum, TO HIGH
+    if (userInput > ranNum){
+      setResults(<p className="alert alert-warning">{`No, you must write a number less than ${userInput}`}</p>);
+      // sumChance();
+    }
+
+    // If input is lower than ranNum, TO LOW
+    if (userInput < ranNum){
+      setResults(<p className="alert alert-warning">{`No, you must write a number greater than ${userInput}`}</p>);
+
+    }
+
+
+    };
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="App">
+        <h1>Guess a Number</h1>
+        <h3>Choose a number between 1 and 30</h3>
+          <input
+            value={value}
+            type="number"
+            onChange= {e => setValue(e.target.value)}
+          />
+        <br/>
+        <br/>
+          <button type="submit" onClick={onClick}>Start</button>
+        <br/>
+        {results}
+      </div>
   );
+
+
 }
 
 export default App;
+
+
+
+
